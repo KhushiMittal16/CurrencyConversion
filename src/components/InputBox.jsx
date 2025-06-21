@@ -19,18 +19,20 @@ function InputBox({
     >
       <div className="w-1/2">
         <label
-          htmlFor={amountInputId}
+          htmlFor={amountInputId} 
           className="text-black/40 mb-2 inline-block"
         >
           {label}
         </label>
         <input
           id={amountInputId}
-          className="outline-none w-full bg-transparent py-1.5"
+          className="no-spinner outline-none w-full bg-transparent py-1.5"
           type="number"
-          placeholder="Amount"
+          value={label == "From" ? (amount > 0 ? amount : "Amount") : amount}
           disabled={amountDisable}
-          value={amount}
+          placeholder="Amount"
+          autoComplete="off"
+          style={{ MozAppearance: "textfield" }}
           onChange={(e) =>
             onAmountChange && onAmountChange(Number(e.target.value))
           }

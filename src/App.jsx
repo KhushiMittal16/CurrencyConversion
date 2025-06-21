@@ -8,10 +8,13 @@ function App() {
   const [from, setFrom] = useState("usd");
   const [to, setTo] = useState("inr");
   const [convertedAmount, setConvertedAmount] = useState(0);
-
-  const currencyInfo = useCurrencyInfo(from);
+  const today = new Date();
+  const formattedToday = `${today.getFullYear()}.${
+    today.getMonth() + 1
+  }.${today.getDate()-1}`;
+  const [newDate, setNewDate] = useState(formattedToday);
+  const currencyInfo = useCurrencyInfo(from, newDate);
   const options = Object.keys(currencyInfo);
-
   const swapCurrency = () => {
     setFrom(to);
     setTo(from);
@@ -21,6 +24,15 @@ function App() {
   const conventCurrency = () => {
     let updatedAmount = Math.round(amount * currencyInfo[to] * 100) / 100;
     setConvertedAmount(updatedAmount);
+  };
+
+  const convertDate = (e) => {
+    const date = new Date(e.target.value);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Months are zero-indexed
+    const day = date.getDate();
+    const formattedDate = `${year}.${month}.${day}`;
+    setNewDate(formattedDate);
   };
 
   return (
@@ -38,6 +50,8 @@ function App() {
               conventCurrency();
             }}
           >
+            <div>Date:</div>
+            <input type="date" onChange={(e) => convertDate(e)} />
             <div className="w-full mb-1">
               <InputBox
                 label="From"
