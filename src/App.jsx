@@ -9,9 +9,9 @@ function App() {
   const [to, setTo] = useState("inr");
   const [convertedAmount, setConvertedAmount] = useState(0);
   const today = new Date();
-  const formattedToday = `${today.getFullYear()}.${
-    today.getMonth() + 1
-  }.${today.getDate()-1}`;
+  const formattedToday = `${today.getFullYear()}.${today.getMonth() + 1}.${
+    today.getDate() - 1
+  }`;
   const [newDate, setNewDate] = useState(formattedToday);
   const currencyInfo = useCurrencyInfo(from, newDate);
   const options = Object.keys(currencyInfo);
@@ -51,7 +51,13 @@ function App() {
             }}
           >
             <div>Date:</div>
-            <input type="date" onChange={(e) => convertDate(e)} />
+            <input
+              type="date"
+              className="outline-none bg-#000 py-1.5"
+              max={new Date().toISOString().split("T")[0]}
+              onChange={(e) => convertDate(e)}
+              placeholderText="mm/dd/yyyy"
+            />
             <div className="w-full mb-1">
               <InputBox
                 label="From"
@@ -67,6 +73,7 @@ function App() {
                 type="button"
                 className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-md bg-blue-600 text-white px-2 py-0.5"
                 onClick={swapCurrency}
+                style={{ backgroundColor: "#000" }}
               >
                 swap
               </button>
@@ -84,6 +91,7 @@ function App() {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg"
+              style={{ backgroundColor: "#000" }}
             >
               Convert {from.toUpperCase()} to {to.toUpperCase()}
             </button>
